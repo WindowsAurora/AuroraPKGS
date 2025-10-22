@@ -2,9 +2,11 @@
 name: "Build and Cache Flake Packages"
 
 on:
+  # Run on pushes to the 'main' branch
   push:
     branches:
       - "main"
+  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 jobs:
@@ -17,21 +19,26 @@ jobs:
       - name: "Install Nix"
         uses: cachix/install-nix-action@v27
         with:
+          # Enable flakes and the new nix command interface
           nix_path: nixpkgs=channel:nixos-unstable
           extra_nix_config: |
             experimental-features = nix-command flakes
 
       - name: "Configure Cachix"
-        # This step is still needed. It installs the 'cachix' command
-        # and securely provides the authentication token as an
-        # environment variable for the next step.
+        # This action will automatically configure Nix to use your Cachix cache
+        # and will wrap the subsequent build step to push the results.
         uses: cachix/cachix-action@v15
         with:
+          # The name of your Cachix cache.
+          # To keep this private, we store it in a GitHub secret.
           name: aurora
+
+          # The authentication token for your Cachix cache.
+          # This MUST be stored in a secret.
           authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
 
-      - name: "Build and Push to Cachix"
-        # This is the corrected step.
-        # We explicitly tell cachix to watch the 'nix build' command
-        # and push the resulting store paths to your cache.
-        run: cachix watch-exec aurora -- nix build .#proton-sarek-async
+      - name: "Build Flake Package"
+        # The cachix-action from the previous step wraps this command.
+        # It builds the package and automatically pushes the output paths
+        # to your configured cache.
+        run: nix build .#proton-sarek-async
