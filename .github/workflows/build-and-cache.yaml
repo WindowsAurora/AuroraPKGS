@@ -31,4 +31,4 @@ jobs:
 
       - name: "Build and Push to Cachix"
         # The cache name is also hardcoded here
-        run: cachix watch-exec aurora -- nix build .#proton-sarek-async
+        run: cachix watch-exec aurora -- nix build .#proton-sarek-async-bin

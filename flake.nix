@@ -16,10 +16,10 @@
       in
       {
         packages = {
-          proton-sarek-async = pkgs.callPackage ./pkgs/proton-sarek-async/package.nix { };
+          proton-sarek-async = pkgs.callPackage ./pkgs/proton-sarek-async-bin/package.nix { };
         };
 
-        defaultPackage = self.packages.${system}.proton-sarek-async;
+        defaultPackage = self.packages.${system}.proton-sarek-async-bin;
       });
 
   # Cachix configuration
