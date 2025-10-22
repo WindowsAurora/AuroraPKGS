@@ -19,7 +19,7 @@
           proton-sarek-async = pkgs.callPackage ./pkgs/proton-sarek-async-bin/package.nix { };
         };
 
-        defaultPackage = self.packages.${system}.proton-sarek-async-bin;
+        defaultPackage = self.packages.${system}.proton-sarek-async;
       });
 
   # Cachix configuration
