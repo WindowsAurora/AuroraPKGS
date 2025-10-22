@@ -27,11 +27,11 @@ jobs:
         # environment variable for the next step.
         uses: cachix/cachix-action@v15
         with:
-          name: ${{ secrets.CACHIX_NAME }}
+          name: aurora
           authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
 
       - name: "Build and Push to Cachix"
         # This is the corrected step.
         # We explicitly tell cachix to watch the 'nix build' command
         # and push the resulting store paths to your cache.
-        run: cachix watch-exec ${{ secrets.CACHIX_NAME }} -- nix build .#proton-sarek-async
+        run: cachix watch-exec aurora -- nix build .#proton-sarek-async
