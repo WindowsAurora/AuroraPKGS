@@ -23,10 +23,8 @@
       });
 
   # Cachix configuration
-  # nixConfig = {
-  #  # Replace <your-cachix-name> with your actual Cachix cache name.
-  #  extra-substituters = [ "https://<your-cachix-name>.cachix.org" ];
-  #  # Replace the public key with the one provided by Cachix for your cache.
-  #  extra-trusted-public-keys = [ "<your-cachix-name>.cachix.org-1:..." ];
-  # };
+  nixConfig = {
+    extra-substituters = [ "https://aurora.cachix.org" ];
+    extra-trusted-public-keys = [ "aurora.cachix.org-1:CoSUKK+iuUv1rb61cnqL/Us8bDs1siFqVW4vPxrBu28=" ];
+  };
 }
