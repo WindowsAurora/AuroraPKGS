@@ -33,11 +33,11 @@ buildZigPackage {
     wlr-protocols
   ];
 
-  PKG_CONFIG_PATH = lib.makeSearchPath "lib/pkgconfig" [
+  PKG_CONFIG_PATH = lib.makeSearchPath "lib/pkgconfig" (map lib.getDev [
     wayland
     wayland-protocols
     wlr-protocols
-  ];
+  ]);
 
   meta = with lib; {
     description = "A basic XSnow clone for wayland written in zig";
