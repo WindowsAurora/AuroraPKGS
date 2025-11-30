@@ -1,16 +1,17 @@
+# pkgs/zsnow/package.nix
 { lib
-, stdenv
 , fetchFromGitHub
-, zig
-, pkg-config
+# These system dependencies are still needed
 , wayland
 , wayland-protocols
 , wlr-protocols
+# This is what we passed in from the flake.nix
+, zig2nix
 }:
 
-stdenv.mkDerivation (finalAttrs: {
+zig2nix.build {
   pname = "zsnow";
-  version = "unstable-2025-10-23"; 
+  version = "unstable-2025-10-23";
 
   src = fetchFromGitHub {
     owner = "DarkVanityOfLight";
@@ -19,23 +20,15 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-V/KHhgbNvRUjpxeuNRWPPGykwe3POf+SHV9Pnf4nWYk=";
   };
 
-  nativeBuildInputs = [
-    # This hook automatically handles Zig dependencies from build.zig.zon
-    zig.hook
-    pkg-config
-  ];
+  # Release mode, equivalent to `-Drelease-safe=true`
+  buildMode = "ReleaseSafe";
 
+  # System-level dependencies are passed here
   buildInputs = [
     wayland
     wayland-protocols
     wlr-protocols
   ];
-
-  # The hook automatically finds and uses a file named `zon.hash`
-  # in the source root to verify zig dependencies.
-  postPatch = ''
-    echo "sha256-V/KHhgbNvRUjpxeuNRWPPGykwe3POf+SHV9Pnf4nWYk=" > zon.hash
-  '';
 
   meta = with lib; {
     description = "A basic XSnow clone for wayland written in zig";
@@ -44,4 +37,4 @@ stdenv.mkDerivation (finalAttrs: {
     platforms = platforms.linux;
     mainProgram = "zsnow";
   };
-})
+}

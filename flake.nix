@@ -4,9 +4,10 @@
   inputs = {
     nixpkgs.url = "github:Nixos/nixpkgs/nixos-unstable"; 
     flake-utils.url = "github:numtide/flake-utils";
+    zig2nix.url = "github:Cloudef/zig2nix";
   };
 
-  outputs = { self, nixpkgs, flake-utils }:
+  outputs = { self, nixpkgs, flake-utils, zig2nix }:
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = import nixpkgs {
@@ -17,7 +18,9 @@
       {
         packages = {
           proton-sarek-async = pkgs.callPackage ./pkgs/proton-sarek-async/package.nix { };
-          zsnow = pkgs.callPackage ./pkgs/zsnow/package.nix { };
+          zsnow = pkgs.callPackage ./pkgs/zsnow/package.nix {
+            zig2nix = zig2nix.packages.${system}; 
+          };
         };
 
         defaultPackage = self.packages.${system}.proton-sarek-async;
