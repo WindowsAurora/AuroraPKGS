@@ -24,6 +24,7 @@ buildZigPackage {
   nativeBuildInputs = [
     pkg-config
     wayland
+    wayland.bin
     wayland-protocols
     wlr-protocols
   ];
