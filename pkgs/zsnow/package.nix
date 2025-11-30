@@ -5,6 +5,7 @@
 , wayland-protocols
 , wlr-protocols
 , buildZigPackage
+, pkg-config
 }:
 
 buildZigPackage {
@@ -19,6 +20,11 @@ buildZigPackage {
   };
 
   buildMode = "ReleaseSafe";
+
+  nativeBuildInputs = [
+    pkg-config
+    wayland  
+  ];
 
   # System dependencies are passed just like in stdenv.mkDerivation
   buildInputs = [
