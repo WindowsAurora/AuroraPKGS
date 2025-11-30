@@ -23,7 +23,9 @@ buildZigPackage {
 
   nativeBuildInputs = [
     pkg-config
-    wayland  
+    wayland
+    wayland-protocols
+    wlr-protocols
   ];
 
   # System dependencies are passed just like in stdenv.mkDerivation
