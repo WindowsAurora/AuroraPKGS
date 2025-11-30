@@ -11,12 +11,7 @@
   outputs = { self, nixpkgs, flake-utils, zig2nix }:
     flake-utils.lib.eachDefaultSystem (system:
       let
-        # This pkgs no longer needs any special config.
-        pkgs = import nixpkgs {
-          inherit system;
-        };
-
-        # This line is correct.
+        pkgs = import nixpkgs { inherit system; };
         buildZigPackage = (zig2nix.zig-env.${system} { inherit nixpkgs; }).package;
       in
       {
@@ -26,7 +21,6 @@
             inherit buildZigPackage;
           };
         };
-
         defaultPackage = self.packages.${system}.proton-sarek-async;
       });
 
@@ -34,8 +28,5 @@
   nixConfig = {
     extra-substituters = [ "https://aurora.cachix.org" ];
     extra-trusted-public-keys = [ "aurora.cachix.org-1:CoSUKK+iuUv1rb61cnqL/Us8bDs1siFqVW4vPxrBu28=" ];
-    
-    # THE FIX: This configures the Nix command itself, not just the library.
-    allow-unfree = true;
   };
 }
