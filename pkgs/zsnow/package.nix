@@ -33,11 +33,25 @@ buildZigPackage {
     wlr-protocols
   ];
 
-  PKG_CONFIG_PATH = lib.makeSearchPath "lib/pkgconfig" (map lib.getDev [
-    wayland
-    wayland-protocols
-    wlr-protocols
-  ]);
+  postPatch = ''
+    substituteInPlace build.zig \
+      --replace "const exe = b.addExecutable(\\"zsnow\\", \\"src/main.zig\\");" \
+        "const exe = b.addExecutable(.{ .name = \\"zsnow\\", .root_source_file = .{ .path = \\"src/main.zig\\"} });\n"
+
+    substituteInPlace build.zig \
+      --'replace' 'exe.linkSystemLibrary("wayland-client");' \
+      '
+        exe.linkSystemLibrary("wayland-client");
+        exe.linkSystemLibrary("wayland-cursor");
+        exe.linkSystemLibrary("xkbcommon");
+        exe.addIncludePath(.{ .path = "${lib.getDev wayland}/include" });
+        exe.addIncludePath(.{ .path = "${lib.getDev wayland-protocols}/include" });
+        exe.addIncludePath(.{ .path = "${lib.getDev wlr-protocols}/include" });
+        exe.addLibraryPath(.{ .path = "${lib.getLib wayland}/lib" });
+        exe.addLibraryPath(.{ .path = "${lib.getLib wayland-protocols}/lib" });
+        exe.addLibraryPath(.{ .path = "${lib.getLib wlr-protocols}/lib" });
+      '
+  '';
 
   meta = with lib; {
     description = "A basic XSnow clone for wayland written in zig";
