@@ -5,27 +5,25 @@
 , pkg-config
 , wayland
 , wayland-protocols
-, wayland-scanner
 , wlr-protocols
 }:
 
-stdenv.mkDerivation rec {
+stdenv.mkDerivation (finalAttrs: {
   pname = "zsnow";
-  version = "unstable-2025-10-23";
+  version = "unstable-2025-10-23"; # Adjust if needed
 
   src = fetchFromGitHub {
     owner = "DarkVanityOfLight";
     repo = "ZSnoW";
-    # Use the latest commit hash from the main branch
-    rev = "0df5c7f212b11dea3e5cfdab8abb4ef470391bf9"; 
-    # Set to lib.fakeHash initially to find the correct hash during the first build
-    hash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
+    rev = "0df5c7f212b11dea3e5cfdab8abb4ef470391bf9";
+    # You will still need to get the correct hash by building once
+    hash = lib.fakeHash;
   };
 
   nativeBuildInputs = [
-    zig
+    # This hook automatically handles Zig dependencies from build.zig.zon
+    zig.hook
     pkg-config
-    wayland-scanner
   ];
 
   buildInputs = [
@@ -34,17 +32,13 @@ stdenv.mkDerivation rec {
     wlr-protocols
   ];
 
-  # This fetches the Zig dependencies (like zig-wayland) before the build
-  # so network access isn't required inside the sandbox.
-  zigDeps = zig.fetchBuildZigDeps {
-    inherit src;
-    name = "${pname}-cache";
-    hash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
-  };
-
-  # Explicitly tell the build to use the system configuration
-  # The hook usually handles this, but some Zig projects need help finding the cache
-  zigBuildFlags = [ "-Doptimize=ReleaseSafe" ];
+  # The hook automatically finds and uses a file named `zon.hash`
+  # in the source root to verify zig dependencies.
+  # We generate that hash from an empty hash.
+  # After the first build fails, Nix will tell you the correct hash.
+  postPatch = ''
+    echo "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=" > zon.hash
+  '';
 
   meta = with lib; {
     description = "A basic XSnow clone for wayland written in zig";
@@ -53,4 +47,4 @@ stdenv.mkDerivation rec {
     platforms = platforms.linux;
     mainProgram = "zsnow";
   };
-}
+})
