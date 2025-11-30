@@ -7,7 +7,7 @@
 , wayland
 , wayland-protocols
 , wlr-protocols
-, xkbcommon # Dependency of zig-wayland
+, libxkbcommon # Dependency of zig-wayland
 }:
 
 stdenv.mkDerivation {
@@ -29,7 +29,7 @@ stdenv.mkDerivation {
     wayland           # Provides wayland-scanner and wayland-scanner.pc
     wayland-protocols # Provides its .pc files
     wlr-protocols     # Provides its .pc files
-    xkbcommon         # Provides its .pc files
+    libxkbcommon         # Provides its .pc files
   ];
 
   # buildInputs: All libraries needed AT RUN TIME by the final binary.
@@ -37,7 +37,7 @@ stdenv.mkDerivation {
     wayland
     wayland-protocols
     wlr-protocols
-    xkbcommon
+    libxkbcommon
   ];
 
   # This creates the `zon.hash` file that the zig.hook requires.
