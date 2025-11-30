@@ -17,9 +17,10 @@
       {
         packages = {
           proton-sarek-async = pkgs.callPackage ./pkgs/proton-sarek-async/package.nix { };
-          zsnow = pkgs.callPackage ./pkgs/zsnow/package.nix {
-            inherit buildZigPackage;
-          };
+          # zsnow = pkgs.callPackage ./pkgs/zsnow/package.nix {
+          #  inherit buildZigPackage;
+          # };
+          zsnow = pkgs.callPackage ./pkgs/zsnow/package.nix { };
         };
         defaultPackage = self.packages.${system}.proton-sarek-async;
       });
