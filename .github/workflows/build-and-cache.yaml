@@ -35,6 +35,7 @@ jobs:
 
       - name: "Build ZSnoW and Push to Cachix"
         run: |
+          sudo apt install libwayland-dev
           sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
           export NIXPKGS_ALLOW_UNFREE=1
           cachix watch-exec aurora -- nix build .#zsnow --accept-flake-config --impure
