@@ -14,7 +14,7 @@
           inherit system;
           config.allowUnfree = true; # Required for steam
         };
-        buildZigPackage = (zig2nix.zig-env.${system} { inherit pkgs; }).package;
+        buildZigPackage = (zig2nix.zig-env.${system} { nixpkgs = pkgs; }).package;
       in
       {
         packages = {
