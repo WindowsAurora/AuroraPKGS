@@ -40,28 +40,6 @@ buildZigPackage {
     libxkbcommon
   ];
 
-  # patch the build file to replace hardcoded, invalid paths with the real paths from the Nix store.
-  postPatch = ''
-    substituteInPlace build.zig \
-      --replace "/usr/share/wlr-protocols/unstable/wlr-layer-shell-unstable-v1.xml" \
-                "${wlr-protocols}/share/wlr-protocols/unstable/wlr-layer-shell-unstable-v1.xml"
-
-    substituteInPlace build.zig \
-      --'replace' 'const scanner = Scanner.create(b, .{});' \
-      '
-        const scanner = Scanner.create(b, .{});
-        scanner.addPath("${wayland-protocols}/share/wayland-protocols");
-      '
-
-    substituteInPlace build.zig \
-      --'replace' 'exe.linkSystemLibrary("wayland-client");' \
-      '
-        exe.linkSystemLibrary("wayland-client");
-        exe.linkSystemLibrary("wayland-cursor");
-        exe.linkSystemLibrary("xkbcommon");
-      '
-  '';
-
   meta = with lib; {
     description = "A basic XSnow clone for wayland written in zig";
     homepage = "https://github.com/WindowsAurora/ZSnoW";
