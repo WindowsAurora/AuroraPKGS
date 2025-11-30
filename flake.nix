@@ -14,12 +14,13 @@
           inherit system;
           config.allowUnfree = true; # Required for steam
         };
+        buildZigPackage = (zig2nix.zig-env { inherit pkgs; }).package;
       in
       {
         packages = {
           proton-sarek-async = pkgs.callPackage ./pkgs/proton-sarek-async/package.nix { };
           zsnow = pkgs.callPackage ./pkgs/zsnow/package.nix {
-            zig2nix-lib = zig2nix.lib.${system}; 
+            inherit buildZigPackage;
           };
         };
 

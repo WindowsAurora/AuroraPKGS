@@ -4,10 +4,10 @@
 , wayland
 , wayland-protocols
 , wlr-protocols
-, zig2nix-lib
+, buildZigPackage  # This is the function we get from zig-env.
 }:
 
-zig2nix-lib.build {
+buildZigPackage {
   pname = "zsnow";
   version = "unstable-2025-10-23";
 
@@ -18,8 +18,10 @@ zig2nix-lib.build {
     hash = "sha256-V/KHhgbNvRUjpxeuNRWPPGykwe3POf+SHV9Pnf4nWYk=";
   };
 
+  # buildMode can be used for release builds
   buildMode = "ReleaseSafe";
 
+  # System dependencies are passed just like in stdenv.mkDerivation
   buildInputs = [
     wayland
     wayland-protocols
