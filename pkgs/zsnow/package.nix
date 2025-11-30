@@ -10,14 +10,13 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "zsnow";
-  version = "unstable-2025-10-23"; # Adjust if needed
+  version = "unstable-2025-10-23"; 
 
   src = fetchFromGitHub {
     owner = "DarkVanityOfLight";
     repo = "ZSnoW";
     rev = "0df5c7f212b11dea3e5cfdab8abb4ef470391bf9";
-    # You will still need to get the correct hash by building once
-    hash = lib.fakeHash;
+    hash = "sha256-V/KHhgbNvRUjpxeuNRWPPGykwe3POf+SHV9Pnf4nWYk=";
   };
 
   nativeBuildInputs = [
@@ -34,8 +33,6 @@ stdenv.mkDerivation (finalAttrs: {
 
   # The hook automatically finds and uses a file named `zon.hash`
   # in the source root to verify zig dependencies.
-  # We generate that hash from an empty hash.
-  # After the first build fails, Nix will tell you the correct hash.
   postPatch = ''
     echo "sha256-V/KHhgbNvRUjpxeuNRWPPGykwe3POf+SHV9Pnf4nWYk=" > zon.hash
   '';
