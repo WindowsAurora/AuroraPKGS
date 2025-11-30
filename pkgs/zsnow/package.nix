@@ -2,6 +2,7 @@
 { lib
 , fetchFromGitHub
 , wayland
+, wayland-scanner
 , wayland-protocols
 , wlr-protocols
 , buildZigPackage
@@ -27,6 +28,7 @@ buildZigPackage {
   nativeBuildInputs = [
     pkg-config
     wayland
+    wayland-scanner
     wayland-protocols
     wlr-protocols
     libxkbcommon
