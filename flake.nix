@@ -8,7 +8,7 @@
     zig2nix.url = "github:Cloudef/zig2nix";
   };
 
-  outputs = { nixpkgs, flake-utils, zig2nix }:
+  outputs = { self, nixpkgs, flake-utils, zig2nix }:
     flake-utils.lib.eachDefaultSystem (system:
       let
         # 1. Define an overlay containing all your custom packages.
