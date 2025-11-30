@@ -29,6 +29,9 @@ jobs:
           name: "aurora" 
           authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
 
-      - name: "Build and Push to Cachix"
+      - name: "Build proton-sarek and Push to Cachix"
         # The cache name is also hardcoded here
         run: cachix watch-exec aurora -- nix build .#proton-sarek-async
+
+      - name: "Build ZSnoW and Push to Cachix"
+        run: cachix watch-exec aurora -- nix build .#zsnow
