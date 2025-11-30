@@ -11,20 +11,12 @@
   outputs = { self, nixpkgs, flake-utils, zig2nix }:
     flake-utils.lib.eachDefaultSystem (system:
       let
-        # Get `lib` directly from the nixpkgs flake input. It's needed for the predicate.
-        lib = nixpkgs.lib;
-
-        # Import nixpkgs, but instead of a global override,
-        # we specify exactly which unfree packages are allowed.
+        # This pkgs no longer needs any special config.
         pkgs = import nixpkgs {
           inherit system;
-          config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
-            "zsnow"
-          ];
         };
 
-        # This line is correct and remains unchanged.
-        # It uses the pure `nixpkgs` flake input, as required by zig2nix.
+        # This line is correct.
         buildZigPackage = (zig2nix.zig-env.${system} { inherit nixpkgs; }).package;
       in
       {
@@ -42,5 +34,8 @@
   nixConfig = {
     extra-substituters = [ "https://aurora.cachix.org" ];
     extra-trusted-public-keys = [ "aurora.cachix.org-1:CoSUKK+iuUv1rb61cnqL/Us8bDs1siFqVW4vPxrBu28=" ];
+    
+    # THE FIX: This configures the Nix command itself, not just the library.
+    allow-unfree = true;
   };
 }
