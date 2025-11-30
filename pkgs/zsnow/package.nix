@@ -37,7 +37,7 @@ stdenv.mkDerivation (finalAttrs: {
   # We generate that hash from an empty hash.
   # After the first build fails, Nix will tell you the correct hash.
   postPatch = ''
-    echo "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=" > zon.hash
+    echo "sha256-V/KHhgbNvRUjpxeuNRWPPGykwe3POf+SHV9Pnf4nWYk=" > zon.hash
   '';
 
   meta = with lib; {
