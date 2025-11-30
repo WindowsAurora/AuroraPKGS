@@ -15,7 +15,7 @@ buildZigPackage {
     owner = "WindowsAurora";
     repo = "ZSnoW";
     rev = "56c15a924de4a0d386324eaca5ffabedb97255d3";
-    hash = "";
+    hash = "sha256-vtnHWgJVJfePdtPr7onYp+Ztq4cuNSjyuuDuipyv6oE=";
   };
 
   buildMode = "ReleaseSafe";
