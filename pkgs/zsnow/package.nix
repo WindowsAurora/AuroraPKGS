@@ -1,15 +1,13 @@
 # pkgs/zsnow/package.nix
 { lib
 , fetchFromGitHub
-# These system dependencies are still needed
 , wayland
 , wayland-protocols
 , wlr-protocols
-# This is what we passed in from the flake.nix
-, zig2nix
+, zig2nix-lib
 }:
 
-zig2nix.build {
+zig2nix-lib.build {
   pname = "zsnow";
   version = "unstable-2025-10-23";
 
@@ -20,10 +18,8 @@ zig2nix.build {
     hash = "sha256-V/KHhgbNvRUjpxeuNRWPPGykwe3POf+SHV9Pnf4nWYk=";
   };
 
-  # Release mode, equivalent to `-Drelease-safe=true`
   buildMode = "ReleaseSafe";
 
-  # System-level dependencies are passed here
   buildInputs = [
     wayland
     wayland-protocols

@@ -19,7 +19,7 @@
         packages = {
           proton-sarek-async = pkgs.callPackage ./pkgs/proton-sarek-async/package.nix { };
           zsnow = pkgs.callPackage ./pkgs/zsnow/package.nix {
-            zig2nix = zig2nix.packages.${system}; 
+            zig2nix = zig2nix.lib.${system}; 
           };
         };
 
