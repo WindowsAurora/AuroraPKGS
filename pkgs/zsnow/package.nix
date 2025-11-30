@@ -4,21 +4,20 @@
 , wayland
 , wayland-protocols
 , wlr-protocols
-, buildZigPackage  # This is the function we get from zig-env.
+, buildZigPackage
 }:
 
 buildZigPackage {
   pname = "zsnow";
-  version = "unstable-2025-10-23";
+  version = "unstable-2025-11-30";
 
   src = fetchFromGitHub {
-    owner = "DarkVanityOfLight";
+    owner = "WindowsAurora";
     repo = "ZSnoW";
-    rev = "0df5c7f212b11dea3e5cfdab8abb4ef470391bf9";
+    rev = "56c15a924de4a0d386324eaca5ffabedb97255d3";
     hash = "sha256-V/KHhgbNvRUjpxeuNRWPPGykwe3POf+SHV9Pnf4nWYk=";
   };
 
-  # buildMode can be used for release builds
   buildMode = "ReleaseSafe";
 
   # System dependencies are passed just like in stdenv.mkDerivation
@@ -30,7 +29,7 @@ buildZigPackage {
 
   meta = with lib; {
     description = "A basic XSnow clone for wayland written in zig";
-    homepage = "https://github.com/DarkVanityOfLight/ZSnoW";
+    homepage = "https://github.com/WindowsAurora/ZSnoW";
     license = licenses.cc-by-nc-sa-40;
     platforms = platforms.linux;
     mainProgram = "zsnow";
