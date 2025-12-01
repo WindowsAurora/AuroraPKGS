@@ -12,9 +12,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
   version = "Proton-Sarek10-17";
 
   src = fetchzip {
-    # This URL now points directly to the Async version of the release
     url = "https://github.com/pythonlover02/Proton-Sarek/releases/download/${finalAttrs.version}/${finalAttrs.version}-Async.tar.gz";
-    # IMPORTANT: You must calculate and insert the new hash for the -Async.tar.gz file.
     hash = "sha256-+klmPLqNw0osA5LHvPIb0xyBlGNsN9xXL3XMWZ6m4J0=";
   };
 
@@ -62,7 +60,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
       (This is intended for use in the `programs.steam.extraCompatPackages` option only.)
     '';
     homepage = "https://github.com/pythonlover02/Proton-Sarek";
-    license = lib.licenses.bsd3; # Based on the original package and Proton's license
+    license = lib.licenses.bsd3;
     maintainers = with lib.maintainers; [
       WindowsAurora
     ];

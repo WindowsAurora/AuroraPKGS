@@ -23,12 +23,10 @@
           zsnow = pkgs.callPackage ./pkgs/zsnow/package.nix {
             inherit buildZigPackage;
           };
-          # zsnow = pkgs.callPackage ./pkgs/zsnow/package.nix { };
         };
         defaultPackage = self.packages.${system}.proton-sarek-async;
       });
 
-  # Cachix configuration
   nixConfig = {
     extra-substituters = [ "https://aurora.cachix.org" ];
     extra-trusted-public-keys = [ "aurora.cachix.org-1:CoSUKK+iuUv1rb61cnqL/Us8bDs1siFqVW4vPxrBu28=" ];

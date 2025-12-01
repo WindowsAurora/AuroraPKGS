@@ -25,8 +25,6 @@ buildZigPackage {
 
   buildMode = "ReleaseSafe";
 
-  # nativeBuildInputs: Tools and libraries needed for the build.
-  # This makes 'wayland-scanner' and all .pc files available to zig build.
   nativeBuildInputs = [
     pkg-config
     wayland
@@ -36,7 +34,6 @@ buildZigPackage {
     libxkbcommon
   ];
 
-  # buildInputs: Libraries the final program needs to run.
   buildInputs = [
     autoPatchelfHook
     wayland
