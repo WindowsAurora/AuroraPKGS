@@ -9,6 +9,7 @@
 , buildZigPackage
 , pkg-config
 , libxkbcommon
+, autoPatchelfHook
 }:
 
 buildZigPackage {
@@ -37,6 +38,7 @@ buildZigPackage {
 
   # buildInputs: Libraries the final program needs to run.
   buildInputs = [
+    autoPatchelfHook
     wayland
     wayland-protocols
     wlr-protocols
