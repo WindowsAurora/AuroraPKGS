@@ -33,9 +33,14 @@ jobs:
         # The cache name is also hardcoded here
         run: cachix watch-exec aurora -- nix build .#proton-sarek-async
 
-      - name: "Build ZSnoW and Push to Cachix"
+      - name: "Build ZSnoW"
+        # We split build and push to ensure we catch build errors explicitly.
+        # -L (print-build-logs) ensures we see the error if it fails in 1 second.
         run: |
-          sudo apt install libwayland-dev
-          sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
-          export NIXPKGS_ALLOW_UNFREE=1
-          cachix watch-exec aurora -- nix build .#zsnow --accept-flake-config --impure
+          nix build .#zsnow --print-build-logs
+          
+      - name: "Push to Cachix"
+        # If the previous step succeeded, 'result' is a symlink to the output.
+        # We explicitly push that result to ensure it is in the cache.
+        run: |
+          cachix push aurora ./result
