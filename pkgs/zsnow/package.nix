@@ -55,7 +55,12 @@ buildZigPackage {
   meta = with lib; {
     description = "A basic XSnow clone for wayland written in zig";
     homepage = "https://github.com/WindowsAurora/ZSnoW";
-    license = licenses.cc-by-nc-sa-40;
+    license = {
+      fullName = "Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International";
+      shortName = "cc-by-nc-sa-4.0";
+      url = "https://creativecommons.org/licenses/by-nc-sa/4.0/";
+      free = true;
+    };
     platforms = platforms.linux;
     mainProgram = "zsnow";
   };
