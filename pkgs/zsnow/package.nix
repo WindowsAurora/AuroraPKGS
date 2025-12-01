@@ -5,6 +5,7 @@
 , wayland-scanner
 , wayland-protocols
 , wlr-protocols
+, xorg
 , buildZigPackage
 , pkg-config
 , libxkbcommon
@@ -40,7 +41,16 @@ buildZigPackage {
     wayland-protocols
     wlr-protocols
     libxkbcommon
+    xorg.libX11
+    xorg.libXau
+    xorg.libXdmcp
   ];
+
+  postPatch = ''
+    substituteInPlace build.zig \
+      --replace-fail "/usr/share/wlr-protocols/unstable/wlr-layer-shell-unstable-v1.xml" \
+                     "${wlr-protocols}/share/wlr-protocols/unstable/wlr-layer-shell-unstable-v1.xml"
+  '';
 
   meta = with lib; {
     description = "A basic XSnow clone for wayland written in zig";
