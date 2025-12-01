@@ -37,7 +37,7 @@ jobs:
         # We split build and push to ensure we catch build errors explicitly.
         # -L (print-build-logs) ensures we see the error if it fails in 1 second.
         run: |
-          nix build .#zsnow --print-build-logs
+          nix build .#zsnow --print-build-logs --accept-flake-config
           
       - name: "Push to Cachix"
         # If the previous step succeeded, 'result' is a symlink to the output.

@@ -11,7 +11,10 @@
   outputs = { self, nixpkgs, flake-utils, zig2nix }:
     flake-utils.lib.eachDefaultSystem (system:
       let
-        pkgs = import nixpkgs { inherit system; };
+        pkgs = import nixpkgs { 
+          inherit system; 
+          config.allowUnfree = true; 
+        };
         buildZigPackage = (zig2nix.zig-env.${system} { inherit nixpkgs; }).package;
       in
       {
