@@ -40,6 +40,7 @@ jobs:
           # Required because zig2nix's internal nixpkgs instance doesn't see our flake config
           NIXPKGS_ALLOW_UNFREE: 1
         run: |
+          sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
           nix build .#zsnow --print-build-logs --accept-flake-config --impure
           
       - name: "Push to Cachix"
