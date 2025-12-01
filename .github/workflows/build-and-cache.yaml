@@ -36,8 +36,11 @@ jobs:
       - name: "Build ZSnoW"
         # We split build and push to ensure we catch build errors explicitly.
         # -L (print-build-logs) ensures we see the error if it fails in 1 second.
+        env:
+          # Required because zig2nix's internal nixpkgs instance doesn't see our flake config
+          NIXPKGS_ALLOW_UNFREE: 1
         run: |
-          nix build .#zsnow --print-build-logs --accept-flake-config
+          nix build .#zsnow --print-build-logs --accept-flake-config --impure
           
       - name: "Push to Cachix"
         # If the previous step succeeded, 'result' is a symlink to the output.
